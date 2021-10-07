@@ -53,7 +53,20 @@ resource "aws_iam_policy" "sftpIAMpolicy" {
         ],
         "Effect" : "Deny",
         "Resource" : "${aws_s3_bucket.s3bucket.arn}/*/"
+      },
+
+      {
+        "Sid" : "Stmt1544140969635",
+        "Action" : [
+          "kms:Decrypt",
+          "kms:Encrypt",
+          "kms:GenerateDataKey"
+        ],
+        "Effect" : "Allow",
+        "Resource" : "${aws_kms_key.s3key.arn}"
       }
+
+
     ]
   })
 }
@@ -94,18 +107,18 @@ resource "aws_iam_policy" "sftpMonitoringpolicy" {
 
   policy = jsonencode({
     Version = "2012-10-17"
-    "Statement": [
-        {
-            "Sid": "CloudWatchLogging",
-            "Effect": "Allow",
-            "Action": [
-                "logs:CreateLogStream",
-                "logs:DescribeLogStreams",
-                "logs:CreateLogGroup",
-                "logs:PutLogEvents"
-            ],
-            "Resource": "arn:aws:logs:*:*:log-group:/aws/transfer/*"
-        }
+    "Statement" : [
+      {
+        "Sid" : "CloudWatchLogging",
+        "Effect" : "Allow",
+        "Action" : [
+          "logs:CreateLogStream",
+          "logs:DescribeLogStreams",
+          "logs:CreateLogGroup",
+          "logs:PutLogEvents"
+        ],
+        "Resource" : "arn:aws:logs:*:*:log-group:/aws/transfer/*"
+      }
     ]
   })
 }
