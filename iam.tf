@@ -73,7 +73,7 @@ resource "aws_iam_policy" "sftpIAMpolicy" {
 
 resource "aws_iam_policy_attachment" "sftpRolePolicyAttach" {
   name       = "sftpRolePolicyAttach"
-  roles      = [aws_iam_role.sftpIAMRole.name]
+  roles      = [aws_iam_role.sftpIAMRole.name,aws_iam_role.lambdaIAMRole.name]
   policy_arn = aws_iam_policy.sftpIAMpolicy.arn
 }
 
@@ -123,15 +123,9 @@ resource "aws_iam_policy" "sftpMonitoringpolicy" {
   })
 }
 
-resource "aws_iam_policy_attachment" "sftpMonitoringRolePolicyAttach" {
-  name       = "sftpMonitoringRolePolicyAttach"
-  roles      = [aws_iam_role.sftpMonitoringRole.name]
-  policy_arn = aws_iam_policy.sftpMonitoringpolicy.arn
-}
-
 
 resource "aws_iam_role" "lambdaIAMRole" {
-  name = "lambdaIAMRole"
+  name = "lambdaforMissingDataRole"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -150,4 +144,80 @@ resource "aws_iam_role" "lambdaIAMRole" {
   tags = {
     Name = "lambdaIAMRole"
   }
+}
+
+data "aws_iam_policy" "lambdabasic" {
+  name = "AWSLambdaBasicExecutionRole"
+}
+
+data "aws_iam_policy" "TransferReadOnly" {
+    name = "AWSTransferReadOnlyAccess"
+}
+
+resource "aws_iam_policy" "SSMparamSecretPolicy" {
+  name        = "SSMparamSecretPolicy"
+  path        = "/"
+  description = "SSMparamSecretPolicy"
+
+  policy = jsonencode({
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "AllowReadParamValue",
+            "Effect": "Allow",
+            "Action": "ssm:GetParameter",
+            "Resource": "${aws_ssm_parameter.slackwebhook.arn}"
+        }
+    ]
+})
+}
+
+resource "aws_iam_policy" "SNSPublishPolicy" {
+  name        = "SNSPublishAccessforLambda"
+  path        = "/"
+  description = "SNSPublishAccessforLambda"
+
+  policy = jsonencode({
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "",
+            "Effect": "Allow",
+            "Action": "sns:Publish",
+            "Resource": "${aws_sns_topic.upload_failue_notify.arn}"
+        }
+    ]
+})
+}
+
+
+resource "aws_iam_policy_attachment" "sftpMonitoringRolePolicyAttach" {
+  name       = "sftpMonitoringRolePolicyAttach"
+  roles      = [aws_iam_role.sftpMonitoringRole.name]
+  policy_arn = aws_iam_policy.sftpMonitoringpolicy.arn
+}
+
+
+resource "aws_iam_policy_attachment" "SSMparamSecretPolicyAttach" {
+  name       = "SSMparamSecretPolicyAttach"
+  roles      = [aws_iam_role.lambdaIAMRole.name]
+  policy_arn = aws_iam_policy.SSMparamSecretPolicy.arn
+}
+
+resource "aws_iam_policy_attachment" "LambdaLoggingPolicyAttach" {
+  name       = "LambdaLoggingPolicyAttach"
+  roles      = [aws_iam_role.lambdaIAMRole.name]
+  policy_arn = data.aws_iam_policy.lambdabasic.arn
+}
+
+resource "aws_iam_policy_attachment" "TransferReadOnlyAttach" {
+  name       = "TransferReadOnlyAttach"
+  roles      = [aws_iam_role.lambdaIAMRole.name]
+  policy_arn = data.aws_iam_policy.TransferReadOnly.arn
+}
+
+resource "aws_iam_policy_attachment" "SNSPublishAttach" {
+  name       = "SNSPublishAttach"
+  roles      = [aws_iam_role.lambdaIAMRole.name]
+  policy_arn = aws_iam_policy.SNSPublishPolicy.arn
 }
