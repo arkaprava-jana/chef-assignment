@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "s3bucket" {
-  bucket = "chef-assignment-databucket"
+  bucket = var.bucket_name
 
   server_side_encryption_configuration {
     rule {
