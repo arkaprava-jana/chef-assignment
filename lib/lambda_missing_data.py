@@ -35,7 +35,7 @@ def lambda_handler(event, context):
     
     for user in transfer_result:
         user_details =client.describe_user(ServerId=sftpserverid,UserName=user['UserName'])
-        if len(user_details['User']['Tags']) > 0:
+        if len(user_details['User']['Tags']) > 36:
             for tag in user_details['User']['Tags']:
                 if tag['Key'] == "UPLOAD_FREQUENCY" and tag['Value'] == "daily":
                     daily_users.append(user_details['User']['UserName'])
