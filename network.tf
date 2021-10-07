@@ -71,3 +71,21 @@ resource "aws_eip" "sftpEIP2" {
   vpc = true
   depends_on                = [aws_internet_gateway.sftpIGW]
 }
+
+resource "aws_security_group" "sftpSG" {
+  description = "Control SFTP inbound traffic"
+  vpc_id      = aws_vpc.sftpVPC.id
+  tags = {
+    Name = "sftpSG"
+  }
+}
+
+resource "aws_security_group_rule" "sftpegress" {
+  type              = "egress"
+  to_port           = 0
+  from_port         = 0
+  protocol          = "-1"
+  cidr_blocks       = ["0.0.0.0/0"]
+  ipv6_cidr_blocks  = ["::/0"]
+  security_group_id = aws_security_group.sftpSG.id
+}
