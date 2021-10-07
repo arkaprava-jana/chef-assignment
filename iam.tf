@@ -44,7 +44,7 @@ resource "aws_iam_policy" "sftpIAMpolicy" {
           "s3:GetObject",
           "s3:GetObjectVersion"
         ],
-        "Resource" : "${aws_s3_bucket.s3bucket.arn}/*"
+        "Resource" : ["${aws_s3_bucket.s3bucket.arn}/*.json","${aws_s3_bucket.s3bucket.arn}/*.csv","${aws_s3_bucket.s3bucket.arn}/*.xl*"]
       },
       {
         "Sid" : "DenyMkdir",
@@ -128,3 +128,5 @@ resource "aws_iam_policy_attachment" "sftpMonitoringRolePolicyAttach" {
   roles      = [aws_iam_role.sftpMonitoringRole.name]
   policy_arn = aws_iam_policy.sftpMonitoringpolicy.arn
 }
+
+
