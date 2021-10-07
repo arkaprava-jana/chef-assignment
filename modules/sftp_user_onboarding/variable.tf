@@ -30,3 +30,12 @@ variable "upload_frequency" {
     error_message = "Value for upload_frequency must be weekly or daily."
   }
 }
+
+variable "user_cidr" {
+    description = "IP/CIDR of user which is to be whitelisted for data upload"
+}
+
+variable "sg_id" {
+  description = "Security Group ID"
+  type        = string
+}
