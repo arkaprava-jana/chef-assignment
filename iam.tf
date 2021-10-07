@@ -63,3 +63,55 @@ resource "aws_iam_policy_attachment" "sftpRolePolicyAttach" {
   roles      = [aws_iam_role.sftpIAMRole.name]
   policy_arn = aws_iam_policy.sftpIAMpolicy.arn
 }
+
+
+resource "aws_iam_role" "sftpMonitoringRole" {
+  name = "sftpMonitoringRole"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = "sts:AssumeRole"
+        Effect = "Allow"
+        Sid    = ""
+        Principal = {
+          Service = "transfer.amazonaws.com"
+        }
+      },
+    ]
+  })
+
+  tags = {
+    Name = "sftpMonitoringRole"
+  }
+}
+
+resource "aws_iam_policy" "sftpMonitoringpolicy" {
+  name        = "sftpMonitoringpolicy"
+  path        = "/"
+  description = "sftpMonitoringpolicy"
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    "Statement": [
+        {
+            "Sid": "CloudWatchLogging",
+            "Effect": "Allow",
+            "Action": [
+                "logs:CreateLogStream",
+                "logs:DescribeLogStreams",
+                "logs:CreateLogGroup",
+                "logs:PutLogEvents"
+            ],
+            "Resource": "arn:aws:logs:*:*:log-group:/aws/transfer/*"
+        }
+    ]
+  })
+}
+
+resource "aws_iam_policy_attachment" "sftpMonitoringRolePolicyAttach" {
+  name       = "sftpMonitoringRolePolicyAttach"
+  roles      = [aws_iam_role.sftpMonitoringRole.name]
+  policy_arn = aws_iam_policy.sftpMonitoringpolicy.arn
+}
