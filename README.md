@@ -5,6 +5,16 @@
 ![Alt text here](diagram/datachef-assignment-arkaprava.drawio.svg)
 
 
+
+## Implementation of Least Privilege
+
+> Home directory path contains the user name of the user and the user is restricted  to that home directory. users can't access anything outside of that folder and can't see the Amazon S3 bucket or folder name.
+
+
+
+
+
+
 ## AWS Service Selection
 
 ### AWS Transfer for SFTP
