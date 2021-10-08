@@ -18,8 +18,10 @@
 
 - Users can not create directory in their home folder
 - Users can not delete uploaded files    
+- Users are allowed to upload only json, csv and excel files
 
-- IAM Policies used in the solution has been designed to provide access on specific resources provisioned via this repo whereever applicable.
+- IAM Policies used in the solution has been designed to provide access on specific resources provisioned via this repo whereever applicable
+
 
 
 ## Detection of Missing Data for Daily Uploaders
@@ -41,6 +43,11 @@
 
 > Unless done correctly event notification to slack channel will not work
 
+## User Onboarding
+
+- User Onboarding can be done via module sftp_user_onboarding
+
+- Implementation creates one user for example & testing purpose -> Refer to user.tf
 
 ## AWS Service Selection
 

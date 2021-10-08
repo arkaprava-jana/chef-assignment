@@ -13,3 +13,8 @@ variable "slack_channel" {
   type = string
   description = "Name of Slack Channel to be notified for missing uploads"
 }
+
+variable "user1_publickey" {
+  type = string
+  description = "Public key for user1"
+}
