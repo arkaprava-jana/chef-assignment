@@ -2,7 +2,7 @@
 
 ## Architecture Diagram
 
-
+![Alt text here](diagram/datachef-assignment-arkaprava.drawio.svg)
 
 ## Requirements
 
