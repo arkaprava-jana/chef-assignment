@@ -8,9 +8,19 @@
 
 ## Implementation of Least Privilege
 
-> Home directory path contains the user name of the user and the user is restricted  to that home directory. users can't access anything outside of that folder and can't see the Amazon S3 bucket or folder name.
+- Home directory path contains the user name of the user and the user is restricted  to that home directory. users can't access anything outside of that folder and can't see the Amazon S3 bucket or folder name.
 
+- User can perform only the following actions on their home directory:
+    '''
+    "s3:PutObject",
+    "s3:GetObject",
+    "s3:GetObjectVersion"
+    '''
 
+- Users can not create directory in their home folder
+- Users can not delete uploaded files    
+
+- IAM Policies used in the solution has been designed to provide access on specific resources provisioned via this repo whereever applicable.
 
 
 
