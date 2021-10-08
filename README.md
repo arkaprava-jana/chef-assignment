@@ -1,5 +1,9 @@
 # chef-assignment
-<!-- BEGIN_TF_DOCS -->
+
+## Architecture Diagram
+
+
+
 ## Requirements
 
 | Name | Version |
