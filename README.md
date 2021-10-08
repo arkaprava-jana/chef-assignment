@@ -75,7 +75,7 @@ SNS can send Email Alert to DataOps Team, provided they confirm the subscription
 
 With AWS Systems Manager Parameter Store, developers have access to central, secure, durable, and highly available storage for application configuration and secrets. Sensitive information like Slack Webhook etc. can be stored in Parameter store as encrypted parameter for free for Lambda functions to access.
 
-
+<!-- BEGIN_TF_DOCS -->
 ## Requirements
 
 | Name | Version |
@@ -150,9 +150,10 @@ With AWS Systems Manager Parameter Store, developers have access to central, sec
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_bucket_name"></a> [bucket\_name](#input\_bucket\_name) | S3 Bucket name for SFTP Storage | `string` | `"chef-assignment-databucket"` | no |
-| <a name="input_notifyemail"></a> [notifyemail](#input\_notifyemail) | Email ID to be notified for missing uploads | `string` | `"arkaprava92@gmail.com"` | no |
-| <a name="input_slack_channel"></a> [slack\_channel](#input\_slack\_channel) | Name of Slack Channel to be notified for missing uploads | `string` | `"dctesting"` | no |
+| <a name="input_bucket_name"></a> [bucket\_name](#input\_bucket\_name) | S3 Bucket name for SFTP Storage | `string` | n/a | yes |
+| <a name="input_notifyemail"></a> [notifyemail](#input\_notifyemail) | Email ID to be notified for missing uploads | `string` | n/a | yes |
+| <a name="input_slack_channel"></a> [slack\_channel](#input\_slack\_channel) | Name of Slack Channel to be notified for missing uploads | `string` | n/a | yes |
+| <a name="input_user1_publickey"></a> [user1\_publickey](#input\_user1\_publickey) | Public key for user1 | `string` | n/a | yes |
 
 ## Outputs
 
