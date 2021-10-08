@@ -44,11 +44,14 @@ def lambda_handler(event, context):
         naive = bucket_last_modified(s3bucket,user).replace(tzinfo=None)
         time_between_insertion = datetime.now() - naive
         hrs_from_last_upload = time_between_insertion.seconds//3600
-        if hrs_from_last_upload > 0:
-            slack_message = { 'channel': SLACK_CHANNEL, 'text': "There has been no upload from %s in last %s hours" % (user,hrs_from_last_upload) }
-            req = Request(hook_url, json.dumps(slack_message).encode('utf-8'))
-            response = urlopen(req)
-            response.read()
+        if hrs_from_last_upload > 36:
+            try:
+                slack_message = { 'channel': SLACK_CHANNEL, 'text': "There has been no upload from %s in last %s hours" % (user,hrs_from_last_upload) }
+                req = Request(hook_url, json.dumps(slack_message).encode('utf-8'))
+                response = urlopen(req)
+                response.read()
+            except:
+                print("Slack Config is not working")
             
             sns_client = boto3.client('sns')
             sns_response = sns_client.publish(TopicArn="${topic_arn}", Message=slack_message['text'])
