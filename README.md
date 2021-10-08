@@ -23,6 +23,22 @@
 - IAM Policies used in the solution has been designed to provide access on specific resources provisioned via this repo whereever applicable.
 
 
+## Detection of Missing Data for Daily Uploaders
+
+- User onboarding tag the user resource with upload frequency (Allowed Values: daily / weekly)
+
+- Lambda function triggers every 24 hours and scans every user directory for time of last upload
+
+- If a user is tagged as daily user but if it has been more then 36 hours since the last upload then DataOps team get alerted via SMS / Slack Notification
+
+
+## Handling of Sensitive Data
+
+- Terraform creates SSM Parameter with dummy value
+
+- Ones parameter is created user need to update value of parameter via Console
+
+- Terraform code has been configured not to overwrite changes done via Console for the parameter
 
 
 ## AWS Service Selection
