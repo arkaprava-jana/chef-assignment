@@ -4,6 +4,34 @@
 
 ![Alt text here](diagram/datachef-assignment-arkaprava.drawio.svg)
 
+
+## AWS Service Selection
+
+### AWS Transfer for SFTP
+
+AWS Transfer Family is a fully managed AWS service that you can use to transfer files into and out of Amazon Simple Storage Service (Amazon S3) storage  over Secure Shell (SSH) File Transfer Protocol (SFTP)
+
+### AWS Global Accelerator
+
+When users are distributed globally, a common challenge SFTP workloads face is longer than acceptable latency for uploads and downloads. This can get especially aggravating when transferring large files. AWS Global Accelerator is a networking service that sends user’s traffic through Amazon Web Service’s global network infrastructure, improving your end-user performance by up to 60%. When the internet is congested, Global Accelerator’s automatic routing optimizations will help keep your packet loss, jitter, and latency consistently low.
+
+### VPC Endpoint & Security Group
+
+Using security groups, customers can apply rules to limit SFTP access to specific public IPv4 addresses or IPv4 address ranges. End users outside of the allowed IP address list are unable to connect to the server. Additionally, customers can associate Elastic IP addresses with their server endpoint. This enables end users behind firewalls to whitelist access to the SFTP server via a static IP, or a pair of IPs for failover.
+
+### AWS Lambda
+
+Check for missing upload of daily uploader agency need to be triggered only ones per day, hence use of Lambda over EC2 is cost optimal.
+
+### AWS SNS
+
+SNS can send Email Alert to DataOps Team, provided they confirm the subscription. SNS also provides option to integrate other meachanims of user notification like SMS/Push Notification for future improvements of the solution.
+
+### Systems Manager Parameter Store
+
+With AWS Systems Manager Parameter Store, developers have access to central, secure, durable, and highly available storage for application configuration and secrets. Sensitive information like Slack Webhook etc. can be stored in Parameter store as encrypted parameter for free for Lambda functions to access.
+
+
 ## Requirements
 
 | Name | Version |
