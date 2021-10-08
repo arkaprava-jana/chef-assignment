@@ -1,20 +1,11 @@
-# Module for onboarding new user on SFTP
-
-
 <!-- BEGIN_TF_DOCS -->
-## Requirements
-
-No requirements.
+# Terraform Module to on-board new agency/user on SFTP System
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | n/a |
-
-## Modules
-
-No modules.
+| <a name="provider_aws"></a> [aws](#provider\_aws) | 3.61.0 |
 
 ## Resources
 
